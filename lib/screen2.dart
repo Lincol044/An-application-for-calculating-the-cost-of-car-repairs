@@ -1,18 +1,25 @@
 import 'package:flutter/material.dart';
 
 class Screen2 extends StatelessWidget {
+  final List<String> data;
+
+  Screen2({required this.data});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black,
       appBar: AppBar(
-        title: Text('Экран 2'),
-        backgroundColor: Colors.black,
+        title: Text('Информация о автомобиле'),
       ),
-      body: Center(
-        child: Text(
-          'Это экран 2',
-          style: TextStyle(color: Colors.white, fontSize: 24),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: ListView.builder(
+          itemCount: data.length,
+          itemBuilder: (context, index) {
+            return ListTile(
+              title: Text(data[index], style: TextStyle(fontSize: 20)),
+            );
+          },
         ),
       ),
     );

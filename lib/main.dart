@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'registrationT.dart';
-import 'mainScreen.dart'; // Убедитесь, что это правильный путь
+import 'mainScreen.dart';
+import 'Continue.dart';
 
 void main() {
   runApp(MyApp());
@@ -42,10 +43,10 @@ class LoginScreen extends StatelessWidget {
             SizedBox(height: 20),
             ElevatedButton(
               onPressed: () {
-                // Навигация на главный экран
+                // Переход на экран продолжения
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => MainScreen()),
+                  MaterialPageRoute(builder: (context) => ContinueScreen()),
                 );
               },
               child: Text('Войти'),

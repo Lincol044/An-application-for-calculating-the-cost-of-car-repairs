@@ -3,6 +3,8 @@ import 'screen1.dart';
 import 'screen2.dart';
 import 'screen3.dart';
 import 'screen4.dart';
+import 'Continue.dart';
+import 'warehouse.dart';
 
 class MainScreen extends StatelessWidget {
   @override
@@ -33,9 +35,13 @@ class MainScreen extends StatelessWidget {
                   Navigator.push(
                     context,
                     MaterialPageRoute(builder: (context) => Screen1()),
-                  );
+                  ).then((result) {
+                    if (result != null) {
+                      // Если вы хотите передать данные обратно в MainScreen, сделайте это здесь
+                    }
+                  });
                 },
-                icon: Icon(Icons.person), // Иконка для Кнопки 1
+                icon: Icon(Icons.drive_eta), // Иконка для Кнопки 1
                 color: Colors.pink,
                 iconSize: 50, // Размер иконки
               ),
@@ -44,10 +50,12 @@ class MainScreen extends StatelessWidget {
                   // Навигация к экрану 2
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => Screen2()),
+                    MaterialPageRoute(
+                        builder: (context) => Screen2(
+                            data: [])), // Передайте пустой список или другие данные по необходимости
                   );
                 },
-                icon: Icon(Icons.drive_eta), // Иконка для Кнопки 2
+                icon: Icon(Icons.subtitles), // Иконка для Кнопки 2
                 color: Colors.pink,
                 iconSize: 50, // Размер иконки
               ),
@@ -71,7 +79,7 @@ class MainScreen extends StatelessWidget {
                     MaterialPageRoute(builder: (context) => Screen4()),
                   );
                 },
-                icon: Icon(Icons.settings), // Иконка для Кнопки 4
+                icon: Icon(Icons.person), // Иконка для Кнопки 4
                 color: Colors.pink,
                 iconSize: 50, // Размер иконки
               ),
