@@ -60,7 +60,7 @@ class LoginScreen extends StatelessWidget {
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => SignUpScreen()),
+                  MaterialPageRoute(builder: (context) => RegistrationScreen()),
                 );
               },
               child: Text('Нет учетной записи? Зарегистрируйтесь',
