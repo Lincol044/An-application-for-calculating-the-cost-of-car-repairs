@@ -11,7 +11,7 @@ class Screen3 extends StatelessWidget {
       ),
       body: Center(
         child: Text(
-          'Это экран 3',
+          'Находится в разработке',
           style: TextStyle(color: Colors.white, fontSize: 24),
         ),
       ),

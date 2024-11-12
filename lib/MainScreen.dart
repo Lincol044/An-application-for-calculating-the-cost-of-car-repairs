@@ -51,13 +51,13 @@ class MainScreen extends StatelessWidget {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => Screen2(
-                            data: [])), // Передайте пустой список или другие данные по необходимости
+                      builder: (context) => Screen2(),
+                    ),
                   );
                 },
-                icon: Icon(Icons.subtitles), // Иконка для Кнопки 2
+                icon: Icon(Icons.subtitles),
                 color: Colors.pink,
-                iconSize: 50, // Размер иконки
+                iconSize: 50,
               ),
               IconButton(
                 onPressed: () {
@@ -76,7 +76,7 @@ class MainScreen extends StatelessWidget {
                   // Навигация к экрану 4
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => Screen4()),
+                    MaterialPageRoute(builder: (context) => DataUpdate()),
                   );
                 },
                 icon: Icon(Icons.person), // Иконка для Кнопки 4

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'screen2.dart';
 import 'warehouse.dart';
 
 class Screen1 extends StatefulWidget {
@@ -21,21 +20,19 @@ class _Screen1State extends State<Screen1> {
         _nameController.text.isNotEmpty;
   }
 
-  void _navigateToNext() {
+  void _saveData() {
     if (_isFormFilled) {
-      // Создаем список с данными
+      // Создаем список с данными и добавляем его в глобальный массив
       List<String> data = [
         'Имя: ${_nameController.text}',
         'Марка: $_selectedBrand',
         'Модель: $_selectedModel',
         'Тип двигателя: $_selectedEngineType',
       ];
-      // Передаем список данных в Screen2
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => Screen2(data: data),
-        ),
+      carData.add(data); // Добавляем данные в глобальный массив
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Данные сохранены!')),
       );
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -75,7 +72,7 @@ class _Screen1State extends State<Screen1> {
               onChanged: (String? newValue) {
                 setState(() {
                   _selectedBrand = newValue;
-                  _selectedModel = null; // Сбросить выбранную модель
+                  _selectedModel = null;
                 });
               },
             ),
@@ -120,8 +117,8 @@ class _Screen1State extends State<Screen1> {
             ),
             SizedBox(height: 20),
             ElevatedButton(
-              onPressed: _navigateToNext,
-              child: Text('Далее'),
+              onPressed: _saveData,
+              child: Text('Сохранить'),
             ),
           ],
         ),

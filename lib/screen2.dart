@@ -1,23 +1,29 @@
 import 'package:flutter/material.dart';
+import 'warehouse.dart';
 
 class Screen2 extends StatelessWidget {
-  final List<String> data;
-
-  Screen2({required this.data});
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Информация о автомобиле'),
+        title: Text('Информация о автомобилях'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: ListView.builder(
-          itemCount: data.length,
+          itemCount: carData.length,
           itemBuilder: (context, index) {
-            return ListTile(
-              title: Text(data[index], style: TextStyle(fontSize: 20)),
+            return Card(
+              margin: EdgeInsets.symmetric(vertical: 8),
+              child: Padding(
+                padding: const EdgeInsets.all(12.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: carData[index]
+                      .map((info) => Text(info, style: TextStyle(fontSize: 18)))
+                      .toList(),
+                ),
+              ),
             );
           },
         ),
