@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:your_project_name/screen5.dart';
 import 'screen1.dart';
 import 'screen2.dart';
 import 'screen3.dart';
@@ -76,7 +77,7 @@ class MainScreen extends StatelessWidget {
                   // Навигация к экрану 4
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => DataUpdate()),
+                    MaterialPageRoute(builder: (context) => Profile()),
                   );
                 },
                 icon: Icon(Icons.person), // Иконка для Кнопки 4
