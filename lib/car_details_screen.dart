@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class CarDetailsScreen extends StatefulWidget {
-  final List<String> car; // Предполагаем, что carData передает список строк
+  final List<String> car;
 
   CarDetailsScreen({required this.car});
 
@@ -10,59 +10,139 @@ class CarDetailsScreen extends StatefulWidget {
 }
 
 class _CarDetailsScreenState extends State<CarDetailsScreen> {
-  late String _engineType;
-  late String _transmissionType;
-  late String _chassisType;
-  late String _fuelSystem;
-  late String _bodyType;
-  late String _seatType;
-  late String _doorType;
-  late String _dashboardType;
+  Map<String, String> selectedParts = {};
+  Map<String, Map<String, double>> partsOptions = {
+    'Двигатель': {
+      'Все исправно': 0,
+      'поршневые кольца, поршни и пальцы в комплекте': 1500.0,
+      'комплект шатунных и коренных вкладышей': 2000.0,
+      'комплект свечей зажигания': 4000.0,
+      'ремни ГРМ': 3000.0,
+      'вакуумный шланг': 1500.0,
+      'сальники, клапаны': 2000.0,
+      'масляный и воздушный фильтр по 1шт': 7000.0,
+    },
+    'Коробка передач': {
+      'Все исправно': 0,
+      'МКППИнструментальная и визуальная диагностика': 1200.0,
+      'МКППДемонтаж': 800.0,
+      'МКПППромывка и дефектовка': 1200.0,
+      'МКППЗапись неисправностей в ведомость.': 1200.0,
+      'МКППСоставление сметы': 1200.0,
+      'МКППЗамена деталей, которые невозможно восстановить.': 1200.0,
+      'АКППИнструментальная и визуальная диагностика': 1200.0,
+      'АКППДемонтаж': 800.0,
+      'АКПППромывка и дефектовка': 1200.0,
+      'АКППЗапись неисправностей в ведомость.': 1200.0,
+      'АКППСоставление сметы': 1200.0,
+      'АКППЗамена деталей, которые невозможно восстановить.': 1200.0,
+    },
+    'Ходовая часть': {
+      'Все исправно': 0,
+      'Подшипники': 1000.0,
+      'Амортизаторы и пружины': 1200.0,
+      'Подвеска': 1500.0,
+      'ШРУС': 1000.0,
+      'Сайлентблоки': 1200.0,
+      'Шаровые опоры': 1500.0,
+      'Тормозная система': 1000.0,
+      'Ступица колеса': 1200.0,
+      'Тормозные колодки': 1500.0,
+    },
+    'Топливная система/Система выпуска газов': {
+      'Все исправно': 0,
+      'топливный насос': 500.0,
+      'топливные фильтры 5 и 19': 300.0,
+      'трубопровод 20 подачи топлива в топливный насос': 500.0,
+      'карбюратор ': 300.0,
+      'фильтр очистки воздуха (воздухоочиститель)': 500.0,
+      'впускной трубопровод ': 300.0,
+    },
+    'Кузов': {
+      'Все исправно': 0,
+      ' капот': 2500.0,
+      ' крылья, облицовки радиатора': 2200.0,
+      'подножки и ряд узлов и агрегатов (внешние световые приборы': 2700.0,
+      'системы климат-контроля': 2500.0,
+      'устройства безопасности': 2200.0,
+      'Пороги': 2700.0,
+      'Задние арки кузова.': 2500.0,
+      'Передние и задние фары.': 2200.0,
+      'Капот двигателя.': 2700.0,
+      'Крыло.': 2500.0,
+      'Передний, задний бампер.': 2200.0,
+    },
+    'Салон': {
+      'Все исправно': 0,
+      'Автомобильные ремни и подушки безопасности': 300.0,
+      'Бардачки и перчаточные ящики': 700.0,
+      'Детали салона автомобиля, общее': 300.0,
+      'Обшивки дверей, багажника, потолков, накладки': 700.0,
+      'Пистоны, заглушки, крепежные элементы': 300.0,
+      'Рули': 700.0,
+      'Ручки кпп и ручника': 300.0,
+      'Сиденья автомобильные': 700.0,
+    },
+    'Двери': {
+      'Все исправно': 0,
+      'Восстановление поверхности кузова': 400.0,
+      'Замена повреждённых компонентов кузова': 600.0,
+      'Устранение скрытых повреждений.': 400.0,
+      'Восстановление геометрии кузова.': 600.0,
+    },
+    'Приборная панель/Торпеда': {
+      'Все исправно': 0,
+      'спидометр – указатель скорости': 800.0,
+      'контрольные лампы работоспособности узлов;': 400.0,
+      'общий и посуточный счетчики пробега': 800.0,
+      'индикатор температуры в системе охлаждения;': 400.0,
+      'индикатор уровня топлива;': 800.0,
+      'тахометр – указатель оборотов двигателя.': 400.0,
+      'Обшивка топреды': 800.0,
+      'Трещены торпеды, потертости': 400.0,
+    },
+  };
 
-  // Примеры опций для каждого поля
-  final List<String> engineOptions = [
-    'Бензиновый',
-    'Дизельный',
-    'Электрический'
-  ];
-  final List<String> transmissionOptions = ['Автоматическая', 'Механическая'];
-  final List<String> chassisOptions = ['Передний', 'Задний', 'Полный'];
-  final List<String> fuelSystemOptions = ['Инжектор', 'Карбюратор'];
-  final List<String> bodyOptions = ['Седан', 'Хэтчбек', 'Универсал'];
-  final List<String> seatOptions = ['Тканевые', 'Кожаные'];
-  final List<String> doorOptions = ['2 двери', '4 двери'];
-  final List<String> dashboardOptions = ['Цифровая', 'Аналоговая'];
+  double totalCost = 0.0;
 
   @override
   void initState() {
     super.initState();
+    // Инициализируем выбранные запчасти значениями по умолчанию (первый элемент из каждого списка)
+    partsOptions.forEach((key, value) {
+      selectedParts[key] = value.keys.first;
+    });
 
-    // Инициализируем значения по умолчанию
-    _engineType = widget.car.length > 4 ? widget.car[4] : engineOptions[0];
-    _transmissionType =
-        widget.car.length > 5 ? widget.car[5] : transmissionOptions[0];
-    _chassisType = widget.car.length > 6 ? widget.car[6] : chassisOptions[0];
-    _fuelSystem = widget.car.length > 7 ? widget.car[7] : fuelSystemOptions[0];
-    _bodyType = widget.car.length > 8 ? widget.car[8] : bodyOptions[0];
-    _seatType = widget.car.length > 9 ? widget.car[9] : seatOptions[0];
-    _doorType = widget.car.length > 10 ? widget.car[10] : doorOptions[0];
-    _dashboardType =
-        widget.car.length > 11 ? widget.car[11] : dashboardOptions[0];
+    // Применяем значения из widget.car, если они есть
+    int i = 0;
+    for (final key in selectedParts.keys) {
+      if (i < widget.car.length) {
+        if (partsOptions[key]!.containsKey(widget.car[i])) {
+          selectedParts[key] = widget.car[i];
+        }
+      }
+      i++;
+    }
+    _calculateTotalCost();
   }
 
-  void _showOptions(
-      String title, List<String> options, ValueChanged<String> onChanged) {
+  void _showOptions(String partCategory) {
     showModalBottomSheet(
       context: context,
       builder: (context) {
         return ListView.builder(
-          itemCount: options.length,
+          itemCount: partsOptions[partCategory]!.length,
           itemBuilder: (context, index) {
+            final entry = partsOptions[partCategory]!.entries.elementAt(index);
             return ListTile(
-              title: Text(options[index]),
+              title: Text(
+                  '${entry.key} - ${entry.value.toStringAsFixed(2)} Рублей'),
               onTap: () {
-                onChanged(options[index]);
-                Navigator.pop(context); // Закрыть модальное окно
+                setState(() {
+                  selectedParts[partCategory] = entry.key;
+                  _calculateTotalCost();
+                });
+                Navigator.pop(context);
               },
             );
           },
@@ -71,133 +151,45 @@ class _CarDetailsScreenState extends State<CarDetailsScreen> {
     );
   }
 
-  void _saveDetails() {
-    // Здесь можно добавить логику для сохранения деталей
+  void _calculateTotalCost() {
     setState(() {
-      // Обновляем данные в массиве car
-      if (widget.car.length > 4) {
-        widget.car[4] = _engineType; // Двигатель/Система охлаждения
-        if (widget.car.length > 5)
-          widget.car[5] = _transmissionType; // Коробка передач
-        if (widget.car.length > 6)
-          widget.car[6] = _chassisType; // Ходовая часть
-        if (widget.car.length > 7)
-          widget.car[7] = _fuelSystem; // Топливная система
-        if (widget.car.length > 8) widget.car[8] = _bodyType; // Кузов
-        if (widget.car.length > 9) widget.car[9] = _seatType; // Сиденья
-        if (widget.car.length > 10) widget.car[10] = _doorType; // Двери
-        if (widget.car.length > 11)
-          widget.car[11] = _dashboardType; // Панель приборов
-      }
+      totalCost = partsOptions.entries.fold<double>(0, (sum, entry) {
+        return sum + partsOptions[entry.key]![selectedParts[entry.key]!]!;
+      });
     });
-
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text('Детали обновлены!')),
-    );
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Детали автомобиля'),
-      ),
+      appBar: AppBar(title: Text('Детали автомобиля')),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            GestureDetector(
-              onTap: () => _showOptions(
-                  'Двигатель/Система охлаждения', engineOptions, (value) {
-                setState(() {
-                  _engineType = value;
-                });
-              }),
-              child: Text('Двигатель/Система охлаждения: $_engineType',
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
-            ),
-            SizedBox(height: 10),
-            GestureDetector(
-              onTap: () =>
-                  _showOptions('Коробка передач', transmissionOptions, (value) {
-                setState(() {
-                  _transmissionType = value;
-                });
-              }),
-              child: Text('Коробка передач: $_transmissionType',
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
-            ),
-            SizedBox(height: 10),
-            GestureDetector(
-              onTap: () =>
-                  _showOptions('Ходовая часть', chassisOptions, (value) {
-                setState(() {
-                  _chassisType = value;
-                });
-              }),
-              child: Text('Ходовая часть: $_chassisType',
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
-            ),
-            SizedBox(height: 10),
-            GestureDetector(
-              onTap: () => _showOptions(
-                  'Топливная система/Система выпуска газа', fuelSystemOptions,
-                  (value) {
-                setState(() {
-                  _fuelSystem = value;
-                });
-              }),
-              child: Text(
-                  'Топливная система/Система выпуска газа: $_fuelSystem',
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
-            ),
-            SizedBox(height: 10),
-            GestureDetector(
-              onTap: () => _showOptions('Кузов', bodyOptions, (value) {
-                setState(() {
-                  _bodyType = value;
-                });
-              }),
-              child: Text('Кузов: $_bodyType',
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
-            ),
-            SizedBox(height: 10),
-            GestureDetector(
-              onTap: () => _showOptions('Сиденья', seatOptions, (value) {
-                setState(() {
-                  _seatType = value;
-                });
-              }),
-              child: Text('Сиденья: $_seatType',
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
-            ),
-            SizedBox(height: 10),
-            GestureDetector(
-              onTap: () => _showOptions('Двери', doorOptions, (value) {
-                setState(() {
-                  _doorType = value;
-                });
-              }),
-              child: Text('Двери: $_doorType',
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
-            ),
-            SizedBox(height: 10),
-            GestureDetector(
-              onTap: () => _showOptions(
-                  'Панель приборов/Система вентиляции', dashboardOptions,
-                  (value) {
-                setState(() {
-                  _dashboardType = value;
-                });
-              }),
-              child: Text('Панель приборов/Система вентиляции: $_dashboardType',
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
-            ),
+            ...partsOptions.entries
+                .map(
+                  (entry) => GestureDetector(
+                    onTap: () => _showOptions(entry.key),
+                    child: Text(
+                      '${entry.key}: ${selectedParts[entry.key]} - ${partsOptions[entry.key]![selectedParts[entry.key]!]?.toStringAsFixed(2) ?? '0.00'} Рублей',
+                      style:
+                          TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                )
+                .toList(),
             SizedBox(height: 20),
             ElevatedButton(
-              onPressed: _saveDetails,
-              child: Text('Сохранить детали'),
+              onPressed: () {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                      content: Text(
+                          'Общая стоимость: ${totalCost.toStringAsFixed(2)} Рублей')),
+                );
+              },
+              child: Text('Показать общую стоимость'),
             ),
           ],
         ),

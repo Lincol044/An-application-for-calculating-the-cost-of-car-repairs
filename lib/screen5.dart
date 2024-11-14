@@ -28,7 +28,7 @@ class _ProfileState extends State<Profile> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: const Color.fromARGB(255, 73, 66, 66),
+        backgroundColor: const Color.fromARGB(255, 53, 53, 65),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back_ios, size: 25),
           onPressed: () {
@@ -39,7 +39,7 @@ class _ProfileState extends State<Profile> {
           },
         ),
       ),
-      backgroundColor: const Color.fromARGB(255, 63, 59, 59),
+      backgroundColor: const Color.fromARGB(255, 53, 53, 65),
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -73,7 +73,7 @@ class _ProfileState extends State<Profile> {
                               "Редактировать",
                               style: TextStyle(
                                 fontSize: 16,
-                                color: Color.fromARGB(255, 88, 87, 91),
+                                color: Color.fromARGB(255, 207, 18, 150),
                               ),
                             ),
                             leading: const Icon(Icons.create, size: 16),
@@ -109,12 +109,12 @@ class _ProfileState extends State<Profile> {
                         : 'Фамилия',
                     style: const TextStyle(
                       fontSize: 18,
-                      color: Color.fromARGB(255, 88, 87, 91),
+                      color: Colors.white,
                     ),
                   ),
                   const SizedBox(height: 2),
                   const Divider(
-                    color: Color.fromARGB(255, 88, 87, 91),
+                    color: Colors.white,
                     height: 5,
                     thickness: 1,
                   ),
@@ -123,12 +123,12 @@ class _ProfileState extends State<Profile> {
                     userData.firstName.isNotEmpty ? userData.firstName : 'Имя',
                     style: const TextStyle(
                       fontSize: 18,
-                      color: Color.fromARGB(255, 88, 87, 91),
+                      color: Colors.white,
                     ),
                   ),
                   const SizedBox(height: 2),
                   const Divider(
-                    color: Color.fromARGB(255, 88, 87, 91),
+                    color: Colors.white,
                     height: 5,
                     thickness: 1,
                   ),
@@ -139,12 +139,12 @@ class _ProfileState extends State<Profile> {
                         : 'Отчество',
                     style: const TextStyle(
                       fontSize: 18,
-                      color: Color.fromARGB(255, 88, 87, 91),
+                      color: Colors.white,
                     ),
                   ),
                   const SizedBox(height: 2),
                   const Divider(
-                    color: Color.fromARGB(255, 88, 87, 91),
+                    color: Colors.white,
                     height: 5,
                     thickness: 1,
                   ),
@@ -153,12 +153,12 @@ class _ProfileState extends State<Profile> {
                     userData.gender.isNotEmpty ? userData.gender : 'Пол',
                     style: const TextStyle(
                       fontSize: 18,
-                      color: Color.fromARGB(255, 88, 87, 91),
+                      color: Colors.white,
                     ),
                   ),
                   const SizedBox(height: 2),
                   const Divider(
-                    color: Color.fromARGB(255, 88, 87, 91),
+                    color: Colors.white,
                     height: 5,
                     thickness: 1,
                   ),
@@ -169,12 +169,12 @@ class _ProfileState extends State<Profile> {
                         : 'Дата рождения',
                     style: const TextStyle(
                       fontSize: 18,
-                      color: Color.fromARGB(255, 88, 87, 91),
+                      color: Colors.white,
                     ),
                   ),
                   const SizedBox(height: 2),
                   const Divider(
-                    color: Color.fromARGB(255, 88, 87, 91),
+                    color: Colors.white,
                     height: 5,
                     thickness: 1,
                   ),
@@ -185,12 +185,12 @@ class _ProfileState extends State<Profile> {
                         : 'Электронная почта',
                     style: const TextStyle(
                       fontSize: 18,
-                      color: Color.fromARGB(255, 88, 87, 91),
+                      color: Colors.white,
                     ),
                   ),
                   const SizedBox(height: 2),
                   const Divider(
-                    color: Color.fromARGB(255, 88, 87, 91),
+                    color: Colors.white,
                     height: 5,
                     thickness: 1,
                   ),
@@ -199,12 +199,12 @@ class _ProfileState extends State<Profile> {
                     userData.phone.isNotEmpty ? userData.phone : 'Телефон',
                     style: const TextStyle(
                       fontSize: 18,
-                      color: Color.fromARGB(255, 88, 87, 91),
+                      color: Colors.white,
                     ),
                   ),
                   const SizedBox(height: 2),
                   const Divider(
-                    color: Color.fromARGB(255, 88, 87, 91),
+                    color: Colors.white,
                     height: 5,
                     thickness: 1,
                   ),
@@ -213,12 +213,12 @@ class _ProfileState extends State<Profile> {
                     userData.city.isNotEmpty ? userData.city : 'Город',
                     style: const TextStyle(
                       fontSize: 18,
-                      color: Color.fromARGB(255, 88, 87, 91),
+                      color: Colors.white,
                     ),
                   ),
                   const SizedBox(height: 5),
                   const Divider(
-                    color: Color.fromARGB(255, 88, 87, 91),
+                    color: Colors.white,
                     height: 5,
                     thickness: 1,
                   ),

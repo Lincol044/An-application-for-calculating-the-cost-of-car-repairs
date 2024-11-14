@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'MainScreen.dart';
+import 'MainScreen.dart'; // Убедитесь, что этот импорт корректен
 
 class ContinueScreen extends StatefulWidget {
   @override
@@ -7,9 +7,7 @@ class ContinueScreen extends StatefulWidget {
 }
 
 class _ContinueScreenState extends State<ContinueScreen> {
-  final _formKey = GlobalKey<FormState>(); // Ключ для валидации формы
-
-  // Контроллеры для полей ввода
+  final _formKey = GlobalKey<FormState>();
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
@@ -17,73 +15,86 @@ class _ContinueScreenState extends State<ContinueScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.black,
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Form(
-          key: _formKey, // Привязка ключа формы
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              // Поле ввода для имени пользователя
-              TextFormField(
-                controller: _usernameController,
-                decoration: InputDecoration(
-                  labelText: 'Имя пользователя',
-                  labelStyle: TextStyle(color: Colors.white),
-                  filled: true,
-                  fillColor: Colors.grey[800],
-                ),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Введите имя пользователя';
-                  }
-                  return null;
-                },
+      body: Center(
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: SizedBox(
+            width: 300,
+            child: Form(
+              key: _formKey,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  _buildOvalTextFormField(
+                    controller: _usernameController,
+                    labelText: 'Имя пользователя',
+                  ),
+                  SizedBox(height: 16),
+                  _buildOvalTextFormField(
+                    controller: _passwordController,
+                    labelText: 'Пароль',
+                    obscureText: true,
+                  ),
+                  SizedBox(height: 20),
+                  ElevatedButton(
+                    onPressed: () {
+                      if (_formKey.currentState!.validate()) {
+                        _showLoadingScreen(context);
+                      }
+                    },
+                    child: Text('Продолжить'),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.pink,
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 50, vertical: 15),
+                    ),
+                  ),
+                ],
               ),
-              SizedBox(height: 16),
-              // Поле ввода для пароля
-              TextFormField(
-                controller: _passwordController,
-                decoration: InputDecoration(
-                  labelText: 'Пароль',
-                  labelStyle: TextStyle(color: Colors.white),
-                  filled: true,
-                  fillColor: Colors.grey[800],
-                ),
-                obscureText: true, // Скрыть текст пароля
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Введите пароль';
-                  }
-                  return null;
-                },
-              ),
-              SizedBox(height: 20),
-              ElevatedButton(
-                onPressed: () {
-                  if (_formKey.currentState!.validate()) {
-                    // Если форма валидна, показываем загрузочный экран с задержкой
-                    _showLoadingScreen(context);
-                  }
-                },
-                child: Text('Продолжить'),
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.pink,
-                  padding: EdgeInsets.symmetric(horizontal: 50, vertical: 15),
-                ),
-              ),
-            ],
+            ),
           ),
         ),
       ),
     );
   }
 
+  Widget _buildOvalTextFormField({
+    required TextEditingController controller,
+    required String labelText,
+    bool obscureText = false,
+  }) {
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(25.0), // Радиус закругления
+      child: Container(
+        padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+        decoration: BoxDecoration(
+          color: Colors.grey[800],
+          borderRadius: BorderRadius.circular(25.0),
+        ),
+        child: TextFormField(
+          controller: controller,
+          decoration: InputDecoration(
+            labelText: labelText,
+            labelStyle: TextStyle(color: Colors.white),
+            border: InputBorder.none, // Убираем стандартную рамку
+          ),
+          obscureText: obscureText,
+          style: TextStyle(color: Colors.white),
+          validator: (value) {
+            if (value == null || value.isEmpty) {
+              return 'Поле не может быть пустым';
+            }
+            return null;
+          },
+        ),
+      ),
+    );
+  }
+
   void _showLoadingScreen(BuildContext context) {
-    // Показать окно с задержкой 3 секунды
     showDialog(
       context: context,
-      barrierDismissible: false, // Окно нельзя закрыть, нажав вне его
+      barrierDismissible: false,
       builder: (context) {
         return AlertDialog(
           backgroundColor: Colors.black,
@@ -100,9 +111,8 @@ class _ContinueScreenState extends State<ContinueScreen> {
       },
     );
 
-    // Задержка на 3 секунды
     Future.delayed(Duration(seconds: 3), () {
-      Navigator.of(context).pop(); // Закрыть диалог
+      Navigator.of(context).pop();
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (context) => MainScreen()),

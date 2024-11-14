@@ -119,7 +119,7 @@ class _EditScreenState extends State<EditScreen> {
             ElevatedButton(
               onPressed:
                   _saveData, // Теперь кнопка сохраняет данные и переходит на экран деталей
-              child: Text('Сохранить'),
+              child: Text('Далее'),
             ),
           ],
         ),

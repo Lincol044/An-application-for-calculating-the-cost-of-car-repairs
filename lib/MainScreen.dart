@@ -3,9 +3,6 @@ import 'package:your_project_name/screen5.dart';
 import 'screen1.dart';
 import 'screen2.dart';
 import 'screen3.dart';
-import 'screen4.dart';
-import 'Continue.dart';
-import 'warehouse.dart';
 
 class MainScreen extends StatelessWidget {
   @override

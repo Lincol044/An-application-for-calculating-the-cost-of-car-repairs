@@ -165,8 +165,9 @@ class _Screen1State extends State<Screen1> {
                   keyboardType: TextInputType.number,
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return 'Пожалуйста, введите год выпуска';
+                      return 'Поле "Год выпуска" обязательно для заполнения.';
                     }
+                    // Add further validation if needed, e.g., checking if it's a valid year
                     return null;
                   },
                 ),
@@ -178,8 +179,9 @@ class _Screen1State extends State<Screen1> {
                   keyboardType: TextInputType.number,
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return 'Пожалуйста, введите пробег';
+                      return 'Поле "Пробег" обязательно для заполнения.';
                     }
+                    // Add further validation if needed, e.g., checking if it's a positive number
                     return null;
                   },
                 ),
@@ -190,8 +192,9 @@ class _Screen1State extends State<Screen1> {
                   decoration: InputDecoration(hintText: 'Введите гос. номер'),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return 'Пожалуйста, введите гос. номер';
+                      return 'Поле "Гос. номер" обязательно для заполнения.';
                     }
+                    // Add further validation if needed, e.g., checking the format of the license plate
                     return null;
                   },
                 ),
@@ -202,8 +205,9 @@ class _Screen1State extends State<Screen1> {
                   decoration: InputDecoration(hintText: 'Введите VIN номер'),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return 'Пожалуйста, введите VIN номер';
+                      return 'Поле "VIN номер" обязательно для заполнения.';
                     }
+                    // Add further validation if needed, e.g., checking the VIN format
                     return null;
                   },
                 ),
@@ -214,7 +218,7 @@ class _Screen1State extends State<Screen1> {
                   decoration: InputDecoration(hintText: 'Введите цвет кузова'),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return 'Пожалуйста, введите цвет кузова';
+                      return 'Поле "Цвет кузова" обязательно для заполнения.';
                     }
                     return null;
                   },
@@ -228,8 +232,9 @@ class _Screen1State extends State<Screen1> {
                   keyboardType: TextInputType.number,
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return 'Пожалуйста, введите объем двигателя';
+                      return 'Поле "Объем двигателя" обязательно для заполнения.';
                     }
+                    // Add further validation if needed, e.g., checking if it's a positive number
                     return null;
                   },
                 ),
@@ -242,11 +247,13 @@ class _Screen1State extends State<Screen1> {
                   keyboardType: TextInputType.number,
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return 'Пожалуйста, введите мощность двигателя';
+                      return 'Поле "Мощность двигателя" обязательно для заполнения.';
                     }
+                    // Add further validation if needed, e.g., checking if it's a positive number
                     return null;
                   },
                 ),
+
                 SizedBox(height: 20),
                 ElevatedButton(
                   onPressed: _saveData,

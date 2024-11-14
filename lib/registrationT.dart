@@ -7,9 +7,7 @@ class RegistrationScreen extends StatefulWidget {
 }
 
 class _RegistrationScreenState extends State<RegistrationScreen> {
-  final _formKey = GlobalKey<FormState>(); // Ключ для валидации формы
-
-  // Контроллеры для полей ввода
+  final _formKey = GlobalKey<FormState>();
   final TextEditingController _fioController = TextEditingController();
   final TextEditingController _nicknameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
@@ -27,125 +25,127 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Form(
-          key: _formKey, // Привязка ключа формы
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              // Поле ввода ФИО
-              TextFormField(
-                controller: _fioController,
-                decoration: InputDecoration(
+          key: _formKey,
+          child: SingleChildScrollView(
+            // Added for scrolling if content overflows
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                _buildOvalTextFormField(
+                  controller: _fioController,
                   labelText: 'ФИО',
-                  labelStyle: TextStyle(color: Colors.white),
-                  filled: true,
-                  fillColor: Colors.grey[800],
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Введите ваше ФИО';
+                    }
+                    return null;
+                  },
                 ),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Введите ваше ФИО';
-                  }
-                  return null;
-                },
-              ),
-              SizedBox(height: 16),
-              // Поле ввода никнейма
-              TextFormField(
-                controller: _nicknameController,
-                decoration: InputDecoration(
+                SizedBox(height: 16),
+                _buildOvalTextFormField(
+                  controller: _nicknameController,
                   labelText: 'Никнейм',
-                  labelStyle: TextStyle(color: Colors.white),
-                  filled: true,
-                  fillColor: Colors.grey[800],
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Введите ваш никнейм';
+                    }
+                    return null;
+                  },
                 ),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Введите ваш никнейм';
-                  }
-                  return null;
-                },
-              ),
-              SizedBox(height: 16),
-              // Поле ввода почты
-              TextFormField(
-                controller: _emailController,
-                decoration: InputDecoration(
+                SizedBox(height: 16),
+                _buildOvalTextFormField(
+                  controller: _emailController,
                   labelText: 'Почта',
-                  labelStyle: TextStyle(color: Colors.white),
-                  filled: true,
-                  fillColor: Colors.grey[800],
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Введите вашу почту';
+                    } else if (!RegExp(r'^[^@]+@[^@]+\.[^@]+')
+                        .hasMatch(value)) {
+                      return 'Введите корректный адрес электронной почты';
+                    }
+                    return null;
+                  },
                 ),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Введите вашу почту';
-                  } else if (!RegExp(r'^[^@]+@[^@]+\.[^@]+').hasMatch(value)) {
-                    return 'Введите корректный адрес электронной почты';
-                  }
-                  return null;
-                },
-              ),
-              SizedBox(height: 16),
-              // Поле ввода номера телефона
-              TextFormField(
-                controller: _phoneController,
-                decoration: InputDecoration(
+                SizedBox(height: 16),
+                _buildOvalTextFormField(
+                  controller: _phoneController,
                   labelText: 'Номер телефона',
-                  labelStyle: TextStyle(color: Colors.white),
-                  filled: true,
-                  fillColor: Colors.grey[800],
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Введите номер телефона';
+                    }
+                    return null;
+                  },
                 ),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Введите номер телефона';
-                  }
-                  return null;
-                },
-              ),
-              SizedBox(height: 16),
-              // Поле ввода пароля
-              TextFormField(
-                controller: _passwordController,
-                decoration: InputDecoration(
+                SizedBox(height: 16),
+                _buildOvalTextFormField(
+                  controller: _passwordController,
                   labelText: 'Пароль',
-                  labelStyle: TextStyle(color: Colors.white),
-                  filled: true,
-                  fillColor: Colors.grey[800],
+                  obscureText: true,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Введите пароль';
+                    } else if (value.length < 6) {
+                      return 'Пароль должен содержать не менее 6 символов';
+                    }
+                    return null;
+                  },
                 ),
-                obscureText: true, // Скрыть текст пароля
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Введите пароль';
-                  } else if (value.length < 6) {
-                    return 'Пароль должен содержать не менее 6 символов';
-                  }
-                  return null;
-                },
-              ),
-              SizedBox(height: 20),
-              ElevatedButton(
-                onPressed: () {
-                  if (_formKey.currentState!.validate()) {
-                    // Если форма валидна, показать загрузочный экран
-                    _showLoadingScreen(context);
-                  }
-                },
-                child: Text('Создать учетную запись'),
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.pink,
-                  padding: EdgeInsets.symmetric(horizontal: 50, vertical: 15),
+                SizedBox(height: 20),
+                ElevatedButton(
+                  onPressed: () {
+                    if (_formKey.currentState!.validate()) {
+                      _showLoadingScreen(context);
+                    }
+                  },
+                  child: Text('Создать учетную запись'),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.pink,
+                    padding: EdgeInsets.symmetric(horizontal: 50, vertical: 15),
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
     );
   }
 
+  Widget _buildOvalTextFormField({
+    required TextEditingController controller,
+    required String labelText,
+    bool obscureText = false,
+    required String? Function(String?)? validator,
+  }) {
+    return ClipRRect(
+      borderRadius:
+          BorderRadius.circular(25.0), // Adjust the radius for ovalness
+      child: Container(
+        padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+        decoration: BoxDecoration(
+          color: Colors.grey[800],
+          borderRadius: BorderRadius.circular(25.0),
+        ),
+        child: TextFormField(
+          controller: controller,
+          decoration: InputDecoration(
+            labelText: labelText,
+            labelStyle: TextStyle(color: Colors.white),
+            border: InputBorder.none,
+          ),
+          obscureText: obscureText,
+          style: TextStyle(color: Colors.white),
+          validator: validator,
+        ),
+      ),
+    );
+  }
+
   void _showLoadingScreen(BuildContext context) {
-    // Показать окно с задержкой 3 секунды
     showDialog(
       context: context,
-      barrierDismissible: false, // Окно нельзя закрыть, нажав вне его
+      barrierDismissible: false,
       builder: (context) {
         return AlertDialog(
           backgroundColor: Colors.black,
@@ -163,9 +163,8 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
       },
     );
 
-    // Задержка на 3 секунды
     Future.delayed(Duration(seconds: 3), () {
-      Navigator.of(context).pop(); // Закрыть диалог
+      Navigator.of(context).pop();
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (context) => MainScreen()),

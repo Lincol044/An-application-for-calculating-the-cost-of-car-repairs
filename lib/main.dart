@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'registrationT.dart';
-import 'mainScreen.dart';
 import 'Continue.dart';
 
 void main() {
