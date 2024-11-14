@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'warehouse.dart';
+import 'car_details_screen.dart'; // Импортируйте экран для деталей автомобиля
 
 class EditScreen extends StatefulWidget {
   final int dataIndex;
@@ -39,12 +40,13 @@ class _EditScreenState extends State<EditScreen> {
       ];
     });
 
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text('Данные обновлены!')),
+    // Переход на экран деталей после сохранения
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(
+        builder: (context) => CarDetailsScreen(car: carData[widget.dataIndex]),
+      ),
     );
-
-    // Возвращаемся на предыдущий экран
-    Navigator.pop(context);
   }
 
   @override
@@ -76,7 +78,8 @@ class _EditScreenState extends State<EditScreen> {
               onChanged: (String? newValue) {
                 setState(() {
                   _selectedBrand = newValue!;
-                  _selectedModel = modelsByBrand[_selectedBrand]![0];
+                  _selectedModel = modelsByBrand[_selectedBrand]![
+                      0]; // Установить первую модель по умолчанию
                 });
               },
             ),
@@ -114,7 +117,8 @@ class _EditScreenState extends State<EditScreen> {
             ),
             SizedBox(height: 20),
             ElevatedButton(
-              onPressed: _saveData,
+              onPressed:
+                  _saveData, // Теперь кнопка сохраняет данные и переходит на экран деталей
               child: Text('Сохранить'),
             ),
           ],
