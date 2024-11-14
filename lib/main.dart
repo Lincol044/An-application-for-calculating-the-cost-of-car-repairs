@@ -72,13 +72,15 @@ class LoginScreen extends StatelessWidget {
                 IconButton(
                   icon: Icon(Icons.g_mobiledata, color: Colors.white),
                   onPressed: () {
-                    // Логика для входа через Google
+                    // Логика для входа через Google -  Имитация
+                    _showLoginDialog(context, 'Google');
                   },
                 ),
                 IconButton(
                   icon: Icon(Icons.apple, color: Colors.white),
                   onPressed: () {
-                    // Логика для входа через Apple
+                    // Логика для входа через Apple - Имитация
+                    _showLoginDialog(context, 'Apple');
                   },
                 ),
               ],
@@ -86,6 +88,31 @@ class LoginScreen extends StatelessWidget {
           ],
         ),
       ),
+    );
+  }
+
+  void _showLoginDialog(BuildContext context, String provider) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Вход через $provider'),
+          content: Text('Вход выполнен успешно!'),
+          actions: <Widget>[
+            TextButton(
+              child: Text('OK'),
+              onPressed: () {
+                Navigator.of(context).pop();
+                // После успешного входа, перенаправляем на нужный экран
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(builder: (context) => ContinueScreen()),
+                );
+              },
+            ),
+          ],
+        );
+      },
     );
   }
 }
