@@ -183,10 +183,43 @@ class _CarDetailsScreenState extends State<CarDetailsScreen> {
             SizedBox(height: 20),
             ElevatedButton(
               onPressed: () {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(
-                      content: Text(
-                          'Общая стоимость: ${totalCost.toStringAsFixed(2)} Рублей')),
+                showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return Dialog(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: Container(
+                        padding: EdgeInsets.all(20),
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Text(
+                              'Общая стоимость:',
+                              style: TextStyle(
+                                  fontSize: 18, fontWeight: FontWeight.bold),
+                            ),
+                            SizedBox(height: 10),
+                            Text(
+                              '${totalCost.toStringAsFixed(2)} Рублей',
+                              style: TextStyle(fontSize: 24),
+                            ),
+                            SizedBox(height: 10),
+                            Text(
+                              'Спасибо, что выбрали наше приложение!',
+                              style: TextStyle(fontSize: 16),
+                            ),
+                            SizedBox(height: 20),
+                            ElevatedButton(
+                              onPressed: () => Navigator.of(context).pop(),
+                              child: Text('OK'),
+                            ),
+                          ],
+                        ),
+                      ),
+                    );
+                  },
                 );
               },
               child: Text('Показать общую стоимость'),
